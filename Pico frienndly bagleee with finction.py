@@ -1,11 +1,3 @@
-#generate random 3 digit number
-#get the input from the user
-#check if number is correctly guess---congrats you won
-#otherwise
-#if digit matches in the same position---have alist in the list add fermi
-#if digit is correct but in wrong position---append pico inside the list
-#if no match ---bagel
-
 import random
 def pfb(guess,str_digits):
     num=1
