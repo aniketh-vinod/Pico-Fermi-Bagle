@@ -1,37 +1,43 @@
 import random
-def pfb(guess,str_digits):
-    num=1
-    clue=[]
-    for i in range (0,3):
-        if guess[i]==str_digits[i]:
-            clue.append("Fermi")
-        elif guess[i] in str_digits:
-            clue.append("Pico")
-        elif guess==str_digits:
-            print("Congrats!")
-            break
-    if len(clue)==0:
-        print("Bagle")
-    else:
-        print(clue)
-    return
-while True:
-    maxguess=10
-    digits = [1,2,3,4,5,6,7,8,9]
-    random.shuffle(digits)
-    str_digits=''
+
+def pfb(guess, secret):
+    clue = []
+
     for i in range(3):
-        str_digits=str_digits+str(digits[i])
-    num=1
-    while num<=maxguess:
-        guess=input("Guess number: ")
-        if len(guess)!=3 or guess.isdigit()==False:
+        if guess[i] == secret[i]:
+            clue.append("Fermi")
+        elif guess[i] in secret:
+            clue.append("Pico")
+
+    if guess == secret:
+        return "Congrats!"
+    if len(clue) == 0:
+        return "Bagel"
+    return clue
+
+while True:
+    digits = list("123456789")
+    random.shuffle(digits)
+    secret = "".join(digits[:3])
+
+    maxguess = 10
+
+    for attempt in range(1, maxguess + 1):
+        guess = input("Guess number: ").strip()
+
+        if len(guess) != 3 or not guess.isdigit():
             print("Enter a valid input")
+            continue
+
+        result = pfb(guess, secret)
+        print(result)
+
+        if guess == secret:
             break
-        else:
-            pfb(guess, str_digits)
-        num = num + 1
-    print(str_digits)
-    chance=input("Do you want to play again? (y/n): ")
-    if chance=="n":
+
+        if attempt == maxguess:
+            print(f"Out of guesses! The number was {secret}")
+
+    chance = input("Do you want to play again? (y/n): ").strip().lower()
+    if chance != "y":
         break
